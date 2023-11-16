@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "pip3 install -r ../backend/requirements.txt && uvicorn --app-dir='../backend' main:app --reload",
+    "fastapi-dev": "pip3 install -r backend/requirements.txt && uvicorn --app-dir='backend' main:app --reload",
     "next-dev": "next dev",
     "dev": "concurrently 'npm run fastapi-dev' 'npm run next-dev'",
     "build": "next build",
