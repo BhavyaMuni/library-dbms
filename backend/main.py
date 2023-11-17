@@ -39,8 +39,8 @@ def read_books(db: Session = Depends(get_db)):
     return books
 
 
-@app.post("/api/books", response_model=schemas.BookCreate)
-def create_book(book: schemas.Book, db: Session = Depends(get_db)):
+@app.post("/api/books", response_model=schemas.Book)
+def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     db_book = crud.create_book(db=db, book=book)
     return db_book
 

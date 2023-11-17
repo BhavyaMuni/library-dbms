@@ -8,7 +8,7 @@ def get_books(db: Session):
 
 
 # write CRUD operations for books
-def create_book(db: Session, book: schemas.Book):
+def create_book(db: Session, book: schemas.BookCreate):
     db_book = models.Book(
         id=db.query(models.Book).count() + 101,
         title=book.title,
