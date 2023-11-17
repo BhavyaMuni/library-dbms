@@ -45,7 +45,7 @@ def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     return db_book
 
 
-@app.delete("/api/books/{bookid}", response_model=schemas.Book)
+@app.delete("/api/books/{bookid}")
 def delete_book(bookid: int, db: Session = Depends(get_db)):
     db_book = crud.delete_book(db=db, bookid=bookid)
     return db_book
