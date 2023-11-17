@@ -3,8 +3,7 @@ import { DataTable } from "./data-table";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  // fetch list of books from my api hosted on port 8000
-  const res = await fetch("http://localhost:8000/api/books");
+  const res = await fetch("/api/books");
   const data = await res.json();
   return data;
   return [
