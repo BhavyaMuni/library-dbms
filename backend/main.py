@@ -32,8 +32,20 @@ def read_root():
 
 
 @app.get("/api/books", response_model=list[schemas.Book])
-def read_book(db: Session = Depends(get_db)):
-    book = crud.get_books(db)
-    if book is None:
+def read_books(db: Session = Depends(get_db)):
+    books = crud.get_books(db)
+    if books is None:
         raise HTTPException(status_code=404, detail="Book not found")
-    return book
+    return books
+
+
+@app.post("/api/books", response_model=schemas.Book)
+def create_book(book: schemas.Book, db: Session = Depends(get_db)):
+    db_book = crud.create_book(db=db, book=book)
+    return db_book
+
+
+@app.delete("/api/books/{bookid}", response_model=schemas.Book)
+def delete_book(bookid: int, db: Session = Depends(get_db)):
+    db_book = crud.delete_book(db=db, bookid=bookid)
+    return db_book
