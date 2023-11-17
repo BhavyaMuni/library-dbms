@@ -11,7 +11,7 @@ class Book(Base):
     publishedyear = Column(Integer)
     totalstock = Column(Integer)
     availablestock = Column(Integer)
-    categoryid = Column(Integer, ForeignKey("categories.id"))
+    categoryid = Column(Integer, ForeignKey("bmuni.categories.id"))
 
 
 class Category(Base):
@@ -46,9 +46,9 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     transactionid = Column(Integer, primary_key=True, index=True)
-    bookid = Column(Integer, ForeignKey("books.id"))
-    customerid = Column(Integer, ForeignKey("customers.id"))
-    employeeid = Column(Integer, ForeignKey("employees.id"))
+    bookid = Column(Integer, ForeignKey("bmuni.books.id"))
+    customerid = Column(Integer, ForeignKey("bmuni.customers.id"))
+    employeeid = Column(Integer, ForeignKey("bmuni.employees.id"))
     checkoutdate = Column(Date)
     duedate = Column(Date)
     returndate = Column(Date)

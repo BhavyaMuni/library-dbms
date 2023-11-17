@@ -13,10 +13,13 @@ class BookBase(BaseModel):
 
 class Book(BookBase):
     bookid: int
-    categoryid: int
 
     class Config:
         orm_mode = True
+
+
+class BookCreate(BookBase):
+    categoryid: int
 
 
 class CategoryBase(BaseModel):
