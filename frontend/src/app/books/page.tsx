@@ -8,6 +8,7 @@ const URL = process.env.NEXT_PUBLIC_VERCEL_URL
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
   const res = await fetch(`${URL}/books`);
+  console.log(res);
   const data = await res.json();
   return data;
 }
