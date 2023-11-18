@@ -12,12 +12,11 @@ async function getBooks(): Promise<Book[]> {
       Accept: "application/json",
     },
   });
-  try {
-    const data = await res.json();
-  } catch (e) {
-    console.log(e);
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
   }
-  return [];
+  return res.json();
 }
 
 export default async function BooksPage() {
