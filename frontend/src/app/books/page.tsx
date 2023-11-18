@@ -12,11 +12,15 @@ async function getBooks(): Promise<Book[]> {
       Accept: "application/json",
     },
   });
-  const data = await res.json();
-  return data;
+  try {
+    const data = await res.json();
+  } catch (e) {
+    console.log(e);
+  }
+  return [];
 }
 
-export default async function DemoPage() {
+export default async function BooksPage() {
   const data = await getBooks();
 
   return (
