@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import { MainNav } from "@/components/main-nav";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
   subsets: ["latin-ext"],
@@ -27,8 +28,15 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <MainNav className="mx-6" />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <MainNav className="mx-6" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

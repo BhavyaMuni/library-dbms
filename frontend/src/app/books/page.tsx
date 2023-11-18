@@ -2,12 +2,10 @@ import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
 
 const URL = "https://library-dbms-backend.vercel.app/api";
-//   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-//   : "http://localhost:3000/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`${URL}/books`, { cache: "no-store" });
+  const res = await fetch(`${URL}/books`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -19,7 +17,8 @@ export default async function BooksPage() {
   const data = await getBooks();
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container flex flex-col mx-auto justify-evenly h-auto">
+      <h1 className="text-3xl font-bold py-4">Books</h1>
       <DataTable columns={columns} data={data} />
     </div>
   );
