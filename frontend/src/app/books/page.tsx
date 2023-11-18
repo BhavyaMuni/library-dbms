@@ -1,17 +1,13 @@
 import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
 
-const URL = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-  : "http://localhost:3000/api";
+const URL = "https://library-dbms-backend.vercel.app/api";
+//   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+//   : "http://localhost:3000/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`${URL}/books`, {
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  const res = await fetch(`${URL}/books`, { cache: "no-store" });
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
