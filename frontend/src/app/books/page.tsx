@@ -1,14 +1,19 @@
 import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
 
-const URL = process.env.BACKEND_URL
-  ? `https://${process.env.BACKEND_URL}/api`
-  : "http://localhost:8000/api";
+const URL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+  : "http://localhost:3000/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`${URL}/books`);
-  return await res.json();
+  const res = await fetch(`${URL}/books`, {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
 }
 
 export default async function DemoPage() {
