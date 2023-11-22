@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Trash } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
@@ -62,8 +62,6 @@ export const columns: ColumnDef<Book>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const book = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -74,12 +72,10 @@ export const columns: ColumnDef<Book>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Button
-              variant="destructive"
-              onClick={() => deleteBook(book.bookid)}
-            >
-              Delete Book
-            </Button>
+            <DropdownMenuItem onClick={() => deleteBook(row.original.bookid)}>
+              <Trash className="mr-2 h-4 w-4" />
+              <span>Delete book</span>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>

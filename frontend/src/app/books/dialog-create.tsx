@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Plus } from "lucide-react";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -143,7 +144,9 @@ export function CreateDialog() {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Submit</Button>
+              <DialogClose asChild>
+                <Button type="submit">Submit</Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>
