@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Plus } from "lucide-react";
 import { CreateDialog } from "./dialog-create";
 const URL = "https://library-dbms-backend.vercel.app/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`${URL}/books`);
+  const res = await fetch(`${URL}/books`, { cache: "no-store" });
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");

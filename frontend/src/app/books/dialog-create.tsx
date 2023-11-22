@@ -25,7 +25,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Plus } from "lucide-react";
-const URL = "https://library-dbms-backend.vercel.app/api";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -51,7 +50,7 @@ export function CreateDialog() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     values.availablestock = values.totalstock;
-    const resp = await fetch(`${URL}/books`, {
+    const resp = await fetch(`/api/books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
