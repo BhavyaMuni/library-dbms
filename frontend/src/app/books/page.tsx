@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
-
+import { Plus } from "lucide-react";
+import { CreateDialog } from "./dialog-create";
 const URL = "https://library-dbms-backend.vercel.app/api";
 
 async function getBooks(): Promise<Book[]> {
@@ -18,7 +20,14 @@ export default async function BooksPage() {
 
   return (
     <div className="container flex flex-col mx-auto justify-evenly h-auto">
-      <h1 className="text-3xl font-bold py-4">Books</h1>
+      <div className="flex flex-row justify-between items-baseline">
+        <h1 className="text-3xl font-bold py-4">Books</h1>
+        <div className="flex space-x-4">
+          <Button variant="default">Populate Books</Button>
+          <CreateDialog />
+          {/* </Button> */}
+        </div>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   );
