@@ -19,14 +19,13 @@ export default async function BooksPage() {
 
   return (
     <div className="container flex flex-col mx-auto justify-evenly h-auto">
-      <div className="flex flex-row justify-between items-baseline">
+      {/* <div className="flex flex-row justify-between items-baseline">
         <h1 className="text-3xl font-bold py-4">Books</h1>
         <div className="flex space-x-4">
           <Button variant="default">Populate Books</Button>
           <CreateDialog />
-          {/* </Button> */}
         </div>
-      </div>
+      </div> */}
       <DataTable columns={columns} data={data} />
     </div>
   );
