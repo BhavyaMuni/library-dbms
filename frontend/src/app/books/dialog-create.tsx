@@ -14,11 +14,6 @@ import { Input } from "@/components/ui/input";
 
 import * as z from "zod";
 
-// const formSchema = z.object({
-//   username: z.string().min(2, {
-//     message: "Username must be at least 2 characters.",
-//   }),
-// });
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -30,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Plus } from "lucide-react";
+const URL = "https://library-dbms-backend.vercel.app/api";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -52,7 +48,7 @@ export function CreateDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const resp = await fetch("/api/books", {
+    const resp = await fetch(`${URL}/books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

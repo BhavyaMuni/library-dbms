@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from db import crud, models, schemas
@@ -9,6 +10,14 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex="https://library-dbms-frontend.vercel.app",
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["*"],
 )
 
 
