@@ -52,16 +52,13 @@ export function CreateDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const resp = await fetch(
-      "https://library-dbms-backend.vercel.app/api/books",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    const resp = await fetch("/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
     if (!resp.ok) {
       throw new Error("Failed to create book");
     }
