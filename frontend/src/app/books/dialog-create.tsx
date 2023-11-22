@@ -32,6 +32,7 @@ const formSchema = z.object({
   author: z.string().min(1),
   publishedyear: z.coerce.number().min(1800).max(2023),
   totalstock: z.coerce.number().min(1),
+  availablestock: z.coerce.number().optional(),
   categoryid: z.coerce.number().min(1).max(14),
 });
 
@@ -43,11 +44,13 @@ export function CreateDialog() {
       author: "",
       publishedyear: 0,
       totalstock: 0,
+      availablestock: 0,
       categoryid: 0,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    values.availablestock = values.totalstock;
     const resp = await fetch(`${URL}/books`, {
       method: "POST",
       headers: {
