@@ -76,7 +76,6 @@ export const columns: ColumnDef<Book>[] = [
               <Trash className="mr-2 h-4 w-4" />
               <span>Delete book</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>
       );

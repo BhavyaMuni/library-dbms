@@ -33,7 +33,7 @@ const formSchema = z.object({
   email: z.string().email(),
   phone: z.string().min(9).max(10),
   address: z.string().min(1),
-  position: z.string().min(1),
+  role: z.string().min(1),
 });
 
 export function CreateDialog() {
@@ -44,7 +44,7 @@ export function CreateDialog() {
       email: "",
       phone: "",
       address: "",
-      position: "",
+      role: "",
     },
   });
 
@@ -132,7 +132,7 @@ export function CreateDialog() {
 
             <FormField
               control={form.control}
-              name="position"
+              name="role"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Position</FormLabel>

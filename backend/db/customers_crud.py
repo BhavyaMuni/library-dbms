@@ -10,7 +10,7 @@ def get_customers(db: Session):
 # write CRUD operations for customers
 def create_customer(db: Session, customer: schemas.CustomerCreate):
     db_customer = models.Customer(
-        customerid=db.query(models.Customer).count() + 600,
+        customerid=db.query(models.Customer).count() + 601,
         name=customer.name,
         email=customer.email,
         phone=customer.phone,

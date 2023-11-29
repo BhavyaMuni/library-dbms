@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal, Trash } from "lucide-react";
+import { CalendarIcon, MoreHorizontal, Trash } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -20,6 +22,7 @@ export type Customer = {
   email: string;
   phone: string;
   address: string;
+  membersince: string;
 };
 
 // function to post delete request to backend api
@@ -54,6 +57,25 @@ export const columns: ColumnDef<Customer>[] = [
     header: "Address",
   },
   {
+    accessorKey: "membersince",
+    header: "Membership",
+    cell: ({ row }) => {
+      return (
+        <Button
+          disabled
+          variant={"ghost"}
+          className={cn(
+            "w-[280px] justify-start text-left font-normal",
+            !row.original.membersince && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {format(Date.parse(row.original.membersince), "PPP")}
+        </Button>
+      );
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -73,7 +95,6 @@ export const columns: ColumnDef<Customer>[] = [
               <Trash className="mr-2 h-4 w-4" />
               <span>Delete</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>
       );

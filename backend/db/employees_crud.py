@@ -12,7 +12,7 @@ def get_employees(db: Session):
 # write CRUD operations for employees
 def create_employee(db: Session, employee: schemas.EmployeeCreate):
     db_employee = models.Employee(
-        employeeid=db.query(models.Employee).count() + 500,
+        employeeid=db.query(models.Employee).count() + 501,
         name=employee.name,
         email=employee.email,
         phone=employee.phone,

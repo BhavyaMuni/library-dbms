@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal, Trash } from "lucide-react";
+import { CalendarIcon, MoreHorizontal, Trash } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -20,16 +22,17 @@ export type Employee = {
   email: string;
   phone: string;
   address: string;
-  position: string;
+  role: string;
+  hiredate: string;
 };
 
 // function to post delete request to backend api
 async function deleteEmployee(id: number) {
-  const response = await fetch(`/api/books/${id}`, {
+  const response = await fetch(`/api/employees/${id}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    throw new Error("Failed to delete book");
+    throw new Error("Failed to delete employee");
   }
 }
 
@@ -55,8 +58,27 @@ export const columns: ColumnDef<Employee>[] = [
     header: "Address",
   },
   {
-    accessorKey: "position",
+    accessorKey: "role",
     header: "Position",
+  },
+  {
+    accessorKey: "hiredate",
+    header: "Hire Date",
+    cell: ({ row }) => {
+      return (
+        <Button
+          disabled
+          variant={"ghost"}
+          className={cn(
+            "w-[280px] justify-start text-left font-normal",
+            !row.original.hiredate && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {format(Date.parse(row.original.hiredate), "PPP")}
+        </Button>
+      );
+    },
   },
   {
     id: "actions",
@@ -78,7 +100,6 @@ export const columns: ColumnDef<Employee>[] = [
               <Trash className="mr-2 h-4 w-4" />
               <span>Delete</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>
       );
