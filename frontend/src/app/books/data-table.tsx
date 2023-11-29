@@ -22,6 +22,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button";
 import { CreateDialog } from "@/app/books/dialog-create";
 import { Book } from "./columns";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,7 +39,7 @@ interface DataTableProps<TData, TValue> {
 
 async function runQuery(qNum: number): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`/api/books/query-{qNum}`);
+  const res = await fetch(`/api/books/query-${qNum}`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -58,6 +66,7 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -70,6 +79,29 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <div className="flex space-x-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Query Table</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Run Query</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={async () => {
+                  updateFunction(await runQuery(1));
+                }}
+              >
+                Query 1
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  updateFunction(await runQuery(2));
+                }}
+              >
+                Query 2
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button
             variant="outline"
             onClick={async () => {
