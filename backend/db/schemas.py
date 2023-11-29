@@ -39,11 +39,12 @@ class EmployeeBase(BaseModel):
     email: str
     phone: str
     address: str
-    hiredate: date
+    role: str
 
 
 class Employee(EmployeeBase):
     employeeid: int
+    hiredate: date
 
     class Config:
         orm_mode = True
@@ -58,14 +59,18 @@ class CustomerBase(BaseModel):
     email: str
     phone: str
     address: str
-    membersince: date
 
 
 class Customer(CustomerBase):
     customerid: int
+    membersince: date
 
     class Config:
         orm_mode = True
+
+
+class CustomerCreate(CustomerBase):
+    pass
 
 
 class TransactionBase(BaseModel):
