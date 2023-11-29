@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from db import crud, models, schemas
@@ -58,3 +59,11 @@ def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
 def delete_book(bookid: int, db: Session = Depends(get_db)):
     db_book = crud.delete_book(db=db, bookid=bookid)
     return db_book
+
+
+@app.get("/api/books/query-{qid}", response_model=list[schemas.Book])
+def run_query(qid: str, db: Session = Depends(get_db)):
+    books = crud.books_query(db=db, query=qid)
+    if books is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return books

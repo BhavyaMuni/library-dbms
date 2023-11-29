@@ -20,29 +20,15 @@ import {
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button";
-import { CreateDialog } from "@/app/books/dialog-create";
-import { Book } from "./columns";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  updateFunction: (new_data: Book[]) => void;
-}
-
-async function runQuery(qNum: number): Promise<Book[]> {
-  // Fetch data from your API here.
-  const res = await fetch(`/api/books/query-{qNum}`);
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  updateFunction,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -60,26 +46,17 @@ export function DataTable<TData, TValue>({
   });
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
+      <Button variant="outline">Populate</Button>
+      <CreateDialog />
+      <div className="flex items-center py-4">
         <Input
-          placeholder="Query books..."
+          placeholder="Query employees..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <div className="flex space-x-4">
-          <Button
-            variant="outline"
-            onClick={async () => {
-              updateFunction(await runQuery(1));
-            }}
-          >
-            Populate Table
-          </Button>
-          <CreateDialog />
-        </div>
       </div>
       <div className="rounded-md border">
         <Table>

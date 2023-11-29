@@ -49,6 +49,10 @@ class Employee(EmployeeBase):
         orm_mode = True
 
 
+class EmployeeCreate(EmployeeBase):
+    pass
+
+
 class CustomerBase(BaseModel):
     name: str
     email: str

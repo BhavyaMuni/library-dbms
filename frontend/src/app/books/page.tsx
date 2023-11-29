@@ -1,12 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Book, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { CreateDialog } from "./dialog-create";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 const URL = "https://library-dbms-backend.vercel.app/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
-  const res = await fetch(`${URL}/books`, { cache: "no-store" });
+  const res = await fetch(`/api/books`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -14,19 +18,23 @@ async function getBooks(): Promise<Book[]> {
   return res.json();
 }
 
-export default async function BooksPage() {
-  const data = await getBooks();
+export default function BooksPage() {
+  //   const data = await getBooks();
+
+  const [data, setData] = useState<Book[]>([]);
+
+  useEffect(() => {
+    getBooks().then((data) => setData(data));
+  }, []);
+
+  const updateBooks = (new_data: Book[]) => {
+    setData(new_data);
+  };
 
   return (
     <div className="container flex flex-col mx-auto justify-evenly h-auto">
-      {/* <div className="flex flex-row justify-between items-baseline">
-        <h1 className="text-3xl font-bold py-4">Books</h1>
-        <div className="flex space-x-4">
-          <Button variant="default">Populate Books</Button>
-          <CreateDialog />
-        </div>
-      </div> */}
-      <DataTable columns={columns} data={data} />
+      <h1 className="text-3xl font-bold py-4">Books</h1>
+      <DataTable columns={columns} data={data} updateFunction={updateBooks} />
     </div>
   );
 }
