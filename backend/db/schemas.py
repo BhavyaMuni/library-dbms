@@ -1,3 +1,4 @@
+import datetime
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
@@ -44,7 +45,7 @@ class EmployeeBase(BaseModel):
 
 class Employee(EmployeeBase):
     employeeid: int
-    hiredate: date
+    hiredate: datetime.datetime
 
     class Config:
         orm_mode = True
@@ -63,7 +64,7 @@ class CustomerBase(BaseModel):
 
 class Customer(CustomerBase):
     customerid: int
-    membersince: date
+    membersince: datetime.datetime
 
     class Config:
         orm_mode = True

@@ -33,7 +33,6 @@ const formSchema = z.object({
   email: z.string().email(),
   phone: z.string().min(9).max(10),
   address: z.string().min(1),
-  position: z.string().min(1),
 });
 
 export function CreateDialog() {
@@ -44,12 +43,11 @@ export function CreateDialog() {
       email: "",
       phone: "",
       address: "",
-      position: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const resp = await fetch(`/api/employees`, {
+    const resp = await fetch(`/api/customers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,19 +55,19 @@ export function CreateDialog() {
       body: JSON.stringify(values),
     });
     if (!resp.ok) {
-      throw new Error("Failed to create employee");
+      throw new Error("Failed to create customer");
     }
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="default" className="bg-green-600">
-          <Plus className="mr-2 h-4 w-4" /> Create Employee
+          <Plus className="mr-2 h-4 w-4" /> Create Customer
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create a new employee</DialogTitle>
+          <DialogTitle>Create a new customer</DialogTitle>
           <DialogDescription>
             Create a new employee by filling out the form below.
           </DialogDescription>
@@ -124,20 +122,6 @@ export function CreateDialog() {
                   <FormLabel>Address</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="position"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Position</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

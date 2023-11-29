@@ -34,6 +34,14 @@ export function MainNav({
             </NavigationMenuItem>
 
             <NavigationMenuItem>
+              <Link href="/customers" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Customers
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
               <Link href="/employees" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Employees

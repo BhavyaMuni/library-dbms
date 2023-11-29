@@ -20,7 +20,7 @@ import {
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button";
-import { CreateDialog } from "@/app/books/dialog-create";
+import { CreateDialog } from "@/app/customers/dialog-create";
 import { Customer } from "./columns";
 import {
   DropdownMenu,
@@ -39,7 +39,7 @@ interface DataTableProps<TData, TValue> {
 
 async function runQuery(qNum: number): Promise<Customer[]> {
   // Fetch data from your API here.
-  const res = await fetch(`/api/books/query-${qNum}`);
+  const res = await fetch(`/api/customers/query-${qNum}`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Query books..."
+          placeholder="Query customers..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)

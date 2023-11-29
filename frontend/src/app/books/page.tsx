@@ -6,7 +6,6 @@ import { DataTable } from "./data-table";
 import { CreateDialog } from "./dialog-create";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-const URL = "https://library-dbms-backend.vercel.app/api";
 
 async function getBooks(): Promise<Book[]> {
   // Fetch data from your API here.
