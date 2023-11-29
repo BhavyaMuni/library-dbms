@@ -96,7 +96,7 @@ def run_query_customers(qid: str, db: Session = Depends(get_db)):
     return customers
 
 
-@app.get("/api/employees", response_model=list[schemas.Customer])
+@app.get("/api/employees", response_model=list[schemas.Employee])
 def read_employees(db: Session = Depends(get_db)):
     employees = employees_crud.get_employees(db)
     if employees is None:
@@ -104,8 +104,8 @@ def read_employees(db: Session = Depends(get_db)):
     return employees
 
 
-@app.post("/api/employees", response_model=schemas.Customer)
-def create_employee(employee: schemas.CustomerCreate, db: Session = Depends(get_db)):
+@app.post("/api/employees", response_model=schemas.Employee)
+def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
     db_employee = employees_crud.create_employee(db=db, employee=employee)
     return db_employee
 
@@ -116,11 +116,11 @@ def delete_employee(employeeid: int, db: Session = Depends(get_db)):
     return db_employee
 
 
-@app.get("/api/employees/query-{qid}", response_model=list[schemas.Customer])
+@app.get("/api/employees/query-{qid}", response_model=list[schemas.Employee])
 def run_query_employees(qid: str, db: Session = Depends(get_db)):
     employees = employees_crud.employees_query(db=db, query=qid)
     if employees is None:
-        raise HTTPException(status_code=404, detail="Customer not found")
+        raise HTTPException(status_code=404, detail="Employee not found")
     return employees
 
 
