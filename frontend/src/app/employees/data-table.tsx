@@ -20,8 +20,8 @@ import {
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button";
-import { CreateDialog } from "@/app/books/dialog-create";
-import { Customer } from "./columns";
+import { CreateDialog } from "@/app/employees/dialog-create";
+import { Employee } from "./columns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,12 +34,12 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  updateFunction: (new_data: Customer[]) => void;
+  updateFunction: (new_data: Employee[]) => void;
 }
 
-async function runQuery(qNum: number): Promise<Customer[]> {
+async function runQuery(qNum: number): Promise<Employee[]> {
   // Fetch data from your API here.
-  const res = await fetch(`/api/books/query-${qNum}`);
+  const res = await fetch(`/api/employees/query-${qNum}`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Query books..."
+          placeholder="Query employees..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
