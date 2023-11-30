@@ -1,7 +1,6 @@
 import datetime
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
 
 
 class BookBase(BaseModel):
@@ -78,14 +77,18 @@ class TransactionBase(BaseModel):
     bookid: int
     customerid: int
     employeeid: int
-    checkoutdate: date
-    duedate: date
-    returndate: Optional[date] = None
-    latefee: Optional[int] = None
+    checkoutdate: datetime.datetime
+    duedate: datetime.datetime
+    returndate: Optional[datetime.datetime] = None
+    latefee: Optional[int] = 0
 
 
 class Transaction(TransactionBase):
-    id: int
+    transactionid: int
 
     class Config:
         orm_mode = True
+
+
+class TransactionCreate(TransactionBase):
+    pass

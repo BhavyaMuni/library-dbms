@@ -2,7 +2,15 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from db import crud, models, schemas, books_crud, customers_crud, employees_crud
+from db import (
+    crud,
+    models,
+    schemas,
+    books_crud,
+    customers_crud,
+    employees_crud,
+    transactions_crud,
+)
 from db.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
@@ -51,6 +59,14 @@ def read_books(db: Session = Depends(get_db)):
 @app.post("/api/books", response_model=schemas.Book)
 def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     db_book = books_crud.create_book(db=db, book=book)
+    return db_book
+
+
+@app.get("/api/books/{bookid}", response_model=schemas.Book)
+def read_book(bookid: int, db: Session = Depends(get_db)):
+    db_book = books_crud.get_book(db=db, bookid=bookid)
+    if db_book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
     return db_book
 
 
@@ -122,6 +138,40 @@ def run_query_employees(qid: str, db: Session = Depends(get_db)):
     if employees is None:
         raise HTTPException(status_code=404, detail="Employee not found")
     return employees
+
+
+@app.get("/api/transactions", response_model=list[schemas.Transaction])
+def read_transactions(db: Session = Depends(get_db)):
+    transactions = transactions_crud.get_transactions(db)
+    if transactions is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return transactions
+
+
+@app.post("/api/transactions", response_model=schemas.Transaction)
+def create_transaction(
+    transaction: schemas.TransactionCreate, db: Session = Depends(get_db)
+):
+    db_transaction = transactions_crud.create_transaction(
+        db=db, transaction=transaction
+    )
+    return db_transaction
+
+
+@app.delete("/api/transactions/{transactionid}")
+def delete_transaction(transactionid: int, db: Session = Depends(get_db)):
+    db_transaction = transactions_crud.delete_transaction(
+        db=db, transactionid=transactionid
+    )
+    return db_transaction
+
+
+@app.get("/api/transactions/query-{qid}", response_model=list[schemas.Transaction])
+def run_query_transactions(qid: str, db: Session = Depends(get_db)):
+    transactions = transactions_crud.transactions_query(db=db, query=qid)
+    if transactions is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return transactions
 
 
 @app.get("/api/populate-all")

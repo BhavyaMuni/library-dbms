@@ -1,47 +1,59 @@
-from operator import or_
+import datetime
 from sqlalchemy.orm import Session
 
 from . import models, schemas
 
 
-def get_books(db: Session):
-    return db.query(models.Book).all()
+def get_transactions(db: Session):
+    return db.query(models.Transaction).all()
 
 
-# write CRUD operations for books
-def create_book(db: Session, book: schemas.BookCreate):
-    db_book = models.Book(
-        bookid=db.query(models.Book).count() + 100,
-        title=book.title,
-        author=book.author,
-        publishedyear=book.publishedyear,
-        totalstock=book.totalstock,
-        availablestock=book.availablestock,
-        categoryid=book.categoryid,
+# write CRUD operations for transactions
+def create_transaction(db: Session, transaction: schemas.TransactionCreate):
+    db_transaction = models.Transaction(
+        transactionid=db.query(models.Transaction).count() + 1,
+        bookid=transaction.bookid,
+        customerid=transaction.customerid,
+        employeeid=transaction.employeeid,
+        checkoutdate=transaction.checkoutdate,
+        duedate=transaction.duedate,
+        returndate=transaction.returndate,
+        latefee=transaction.latefee,
     )
-    db.add(db_book)
+    db.add(db_transaction)
     db.commit()
-    db.refresh(db_book)
-    return db_book
+    db.refresh(db_transaction)
+    return db_transaction
 
 
-def delete_book(db: Session, bookid: int):
-    db.query(models.Book).filter(models.Book.bookid == bookid).delete()
+def delete_transaction(db: Session, transactionid: int):
+    db.query(models.Transaction).filter(
+        models.Transaction.transactionid == transactionid
+    ).delete()
     db.commit()
-    return {"message": "Book deleted successfully."}
+    return {"message": "Transaction deleted successfully."}
 
 
-def books_query(db: Session, query: str):
+def transactions_query(db: Session, query: str):
     if query == "1":
-        return db.query(models.Book).filter(models.Book.publishedyear > 2011).all()
+        return (
+            db.query(models.Transaction)
+            .filter(models.Transaction.checkoutdate > datetime.datetime(2013, 7, 1))
+            .order_by(models.Transaction.checkoutdate.desc())
+            .all()
+        )
 
     return (
-        db.query(models.Book)
-        .filter(or_(models.Book.categoryid == 6, models.Book.categoryid == 2))
-        .order_by(models.Book.publishedyear.desc())
+        db.query(models.Transaction)
+        .filter(models.Transaction.employeeid == 501)
+        .order_by(models.Transaction.checkoutdate.desc())
         .all()
     )
 
 
-def get_book(db: Session, bookid: int):
-    return db.query(models.Book).filter(models.Book.bookid == bookid).first()
+def get_transaction(db: Session, transactionid: int):
+    return (
+        db.query(models.Transaction)
+        .filter(models.Transaction.transactionid == transactionid)
+        .first()
+    )
