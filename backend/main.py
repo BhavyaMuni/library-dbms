@@ -24,7 +24,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origin_regex="https://library-dbms-frontend.vercel.app",
     allow_credentials=True,
-    allow_methods=["GET", "POST", "DELETE"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -143,6 +143,7 @@ def run_query_employees(qid: str, db: Session = Depends(get_db)):
 @app.get("/api/transactions", response_model=list[schemas.Transaction])
 def read_transactions(db: Session = Depends(get_db)):
     transactions = transactions_crud.get_transactions(db)
+    print(transactions)
     if transactions is None:
         raise HTTPException(status_code=404, detail="Transaction not found")
     return transactions
