@@ -72,7 +72,10 @@ export const columns: ColumnDef<Book>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => deleteBook(row.original.bookid)}>
+            <DropdownMenuItem
+              disabled
+              onClick={() => deleteBook(row.original.bookid)}
+            >
               <Trash className="mr-2 h-4 w-4" />
               <span>Delete book</span>
             </DropdownMenuItem>

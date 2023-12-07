@@ -130,6 +130,7 @@ export const columns: ColumnDef<Transaction>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
+              disabled
               onClick={() => deleteTransaction(row.original.transactionid)}
             >
               <Trash className="mr-2 h-4 w-4" />

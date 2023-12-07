@@ -145,7 +145,9 @@ export function CreateDialog() {
             />
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="submit">Submit</Button>
+                <Button disabled type="submit">
+                  Submit
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>
